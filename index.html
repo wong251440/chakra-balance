@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>脈輪平衡測試系統</title>
+    <meta
+      name="description"
+      content="120 題高精準脈輪平衡測試，量測每個脈輪的平衡開發度、閉塞傾向與過度活躍傾向。"
+    />
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <div class="background-orb orb-a"></div>
+    <div class="background-orb orb-b"></div>
+    <div class="background-orb orb-c"></div>
+
+    <main class="shell">
+      <section class="hero card" id="hero">
+        <p class="eyebrow">Chakra Balance Assessment</p>
+        <h1>脈輪平衡測試系統</h1>
+        <p class="lead">
+          120 題、7 點量表、同時辨識平衡表現、閉塞傾向與過度活躍傾向。高分不代表能量強烈，而代表穩定、整合與平衡。
+        </p>
+
+        <div class="hero-grid">
+          <div class="hero-panel">
+            <h2>測驗特色</h2>
+            <ul class="plain-list">
+              <li>7 脈輪，每輪 16 題主量表</li>
+              <li>8 題效度控制題</li>
+              <li>輸出每輪開發度、閉塞%、過度活躍%</li>
+              <li>包含作答品質與信心係數</li>
+            </ul>
+          </div>
+          <div class="hero-panel">
+            <h2>作答方式</h2>
+            <ul class="plain-list">
+              <li>以最近 90 天為準</li>
+              <li>7 點 Likert：非常不同意到非常同意</li>
+              <li>預計 12 到 18 分鐘</li>
+              <li>中途自動儲存到瀏覽器本機</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="hero-actions">
+          <button class="primary-button" id="start-button" type="button">開始測驗</button>
+          <button class="secondary-button" id="random-button" type="button">隨機作答（測試）</button>
+          <button class="secondary-button" id="reset-button" type="button">清除本機紀錄</button>
+        </div>
+      </section>
+
+      <section class="survey card hidden" id="survey">
+        <header class="survey-header">
+          <div>
+            <p class="eyebrow">Questionnaire</p>
+            <h2 id="page-title">題目</h2>
+          </div>
+          <div class="progress-meta">
+            <span id="progress-count">0 / 120</span>
+            <span id="progress-page">第 1 / 12 頁</span>
+          </div>
+        </header>
+
+        <div class="progress-bar">
+          <div class="progress-fill" id="progress-fill"></div>
+        </div>
+
+        <div class="scale-legend">
+          <span>1 非常不同意</span>
+          <span>4 不確定</span>
+          <span>7 非常同意</span>
+        </div>
+
+        <form id="question-form" class="question-list" novalidate></form>
+
+        <div class="survey-actions">
+          <button class="ghost-button" id="prev-button" type="button">上一頁</button>
+          <button class="primary-button" id="next-button" type="button">下一頁</button>
+        </div>
+      </section>
+
+      <section class="results hidden" id="results">
+        <div class="results-top card">
+          <div>
+            <p class="eyebrow">Results</p>
+            <h2>測驗結果</h2>
+            <p class="section-copy" id="result-summary"></p>
+            <p class="section-copy result-healing-note" id="result-healing-note"></p>
+          </div>
+
+          <div class="overview-grid">
+            <article class="metric-box">
+              <span class="metric-label">整體平衡開發度</span>
+              <strong id="overall-score">0%</strong>
+            </article>
+            <article class="metric-box">
+              <span class="metric-label">系統協調度</span>
+              <strong id="coherence-score">0%</strong>
+            </article>
+            <article class="metric-box">
+              <span class="metric-label">作答信心</span>
+              <strong id="confidence-score">0%</strong>
+            </article>
+          </div>
+        </div>
+
+        <div class="results-briefing">
+          <section class="insight-panel card">
+            <div class="section-heading">
+              <div>
+                <h3>溫柔看見</h3>
+                <p class="section-copy">
+                  這裡不是在挑錯，而是在陪你看見此刻哪裡還有光、哪裡已經太久沒有被照顧。
+                </p>
+              </div>
+            </div>
+            <div class="insight-grid" id="insight-grid"></div>
+          </section>
+
+          <section class="priority-panel card">
+            <div class="section-heading">
+              <div>
+                <h3>先照顧這些地方</h3>
+                <p class="section-copy" id="priority-summary"></p>
+              </div>
+            </div>
+            <div class="priority-list" id="priority-list"></div>
+          </section>
+        </div>
+
+        <div class="quality card">
+          <h3>作答狀態參考</h3>
+          <div class="quality-grid" id="quality-grid"></div>
+        </div>
+
+        <section class="chakra-section">
+          <div class="section-heading">
+            <div>
+              <h3>七輪療癒閱讀</h3>
+              <p class="section-copy">
+                每一輪都會同時看平衡、閉塞與過度活躍，並補上觸發情境、日常表現、修復建議與提醒，幫你分辨那是穩定流動，還是太久以來的用力與防守。
+              </p>
+            </div>
+          </div>
+          <div class="chakra-grid" id="chakra-grid"></div>
+        </section>
+
+        <div class="results-actions">
+          <button class="secondary-button" id="export-button" type="button">匯出結果 JSON</button>
+          <button class="ghost-button" id="restart-button" type="button">重新填答</button>
+        </div>
+      </section>
+    </main>
+
+    <template id="question-template">
+      <article class="question-card">
+        <div class="question-header">
+          <span class="question-index"></span>
+          <span class="question-chakra"></span>
+        </div>
+        <p class="question-text"></p>
+        <div class="likert-options" role="radiogroup"></div>
+      </article>
+    </template>
+
+    <template id="chakra-card-template">
+      <article class="chakra-card card">
+        <div class="chakra-heading">
+          <div>
+            <p class="chakra-name"></p>
+            <h3 class="chakra-score"></h3>
+          </div>
+          <span class="chakra-pattern"></span>
+        </div>
+        <p class="chakra-summary"></p>
+        <div class="chakra-details"></div>
+        <div class="bar-group">
+          <div class="bar-row">
+            <span>平衡開發度</span>
+            <strong class="bar-value chakra-main"></strong>
+          </div>
+          <div class="bar-track">
+            <div class="bar-fill bar-main"></div>
+          </div>
+        </div>
+        <div class="bar-group split-bars">
+          <div class="split-item">
+            <div class="bar-row">
+              <span>閉塞傾向</span>
+              <strong class="bar-value chakra-blocked"></strong>
+            </div>
+            <div class="bar-track subtle">
+              <div class="bar-fill bar-blocked"></div>
+            </div>
+          </div>
+          <div class="split-item">
+            <div class="bar-row">
+              <span>過度活躍</span>
+              <strong class="bar-value chakra-excess"></strong>
+            </div>
+            <div class="bar-track subtle">
+              <div class="bar-fill bar-excess"></div>
+            </div>
+          </div>
+        </div>
+      </article>
+    </template>
+
+    <script src="./app.js"></script>
+  </body>
+</html>
